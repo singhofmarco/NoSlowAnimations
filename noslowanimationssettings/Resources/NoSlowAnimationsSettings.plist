@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>items</key>
+    <array>
+        <dict>
+            <key>cell</key>             <string>PSGroupCell</string>
+        </dict>
+        <dict>
+            <key>cell</key>             <string>PSSwitchCell</string>
+            <key>default</key>          <true/>
+            <key>defaults</key>         <string>com.marcosinghof.NoSlowAnimationsSettings</string>
+            <key>key</key>              <string>SCisEnabled</string>
+            <key>label</key>            <string>Enabled</string>
+            <key>alternateColors</key>  <true/>
+            <key>PostNotification</key> <string>com.marcosinghof.NoSlowAnimationsSettings/settingschanged</string>
+        </dict>
+        
+        <dict>
+        	<key>cell</key>				<string>PSGroupCell</string>
+        	<key>label</key>			<string>Speed</string>
+        	 	<key>footerText</key>			<string>0.0 = Instant, 1.0 = iOS Default</string>
+        </dict>
+  
+
+        <dict>
+            <key>cell</key>             <string>PSSliderCell</string>
+            <key>defaults</key>         <string>com.marcosinghof.NoSlowAnimationsSettings</string>
+            <key>key</key>              <string>Slider</string>
+            <key>min</key>				<string>0.0</string>
+            <key>max</key>				<string>1.0</string>
+            <key>showValue</key>		<true/>
+            <key>PostNotification</key> <string>com.marcosinghof.NoSlowAnimationsSettings/settingschanged</string>
+        </dict>
+        
+        <dict>
+        	<key>cell</key>				<string>PSGroupCell</string>
+        	<key>label</key>			<string>Support</string>
+        	<key>footerText</key>			<string>If you like to support me, you can do this with PayPal or Follow me on Twitter.</string>
+        </dict>
+        
+         <dict>
+        <key>cell</key>
+        <string>PSButtonCell</string>
+        <key>default</key>
+        <true/>
+        <key>enabled</key>
+          <true/>
+          <key>icon</key>
+          <string>paypal@2x.png</string>
+          <key>isDestructive</key>
+          <true/>
+        <key>action</key>
+          <string>donate:</string>
+          <key>label</key>
+          <string>PayPal</string>
+          <key>id</key>
+          <string>PayPal</string>
+        </dict>
+        
+            <dict>
+        <key>cell</key>
+        <string>PSButtonCell</string>
+        <key>default</key>
+        <true/>
+  <key>alternateColors</key>
+         <true/>
+        <key>enabled</key>
+          <true/>
+          <key>icon</key>
+          <string>twitter@2x.png</string>
+          <key>isDestructive</key>
+          <true/>
+        <key>action</key>
+          <string>twitter:</string>
+          <key>label</key>
+          <string>Twitter</string>
+          <key>id</key>
+          <string>twitter</string>
+        </dict>
+                
+        <dict>
+        <key>cell</key>
+        <string>PSButtonCell</string>
+        <key>default</key>
+        <true/>
+  <key>alternateColors</key>
+         <true/>
+        <key>enabled</key>
+          <true/>
+          <key>icon</key>
+          <string>mail@2x.png</string>
+          <key>isDestructive</key>
+          <true/>
+        <key>action</key>
+          <string>sendEmailTo:</string>
+          <key>label</key>
+          <string>Email</string>
+          <key>id</key>
+          <string>sendEmailTo</string>
+        </dict>
+        
+         <dict>
+                        <key>cell</key>
+                        <string>PSGroupCell</string>
+                        <key>footerText</key>
+                        <string>NoSlowAnimations by Marco Singhof</string>
+                </dict>
+     
+    </array>
+    <key>title</key>
+    <string>NoSlowAnimations</string>
+</dict>
+</plist>

@@ -1,0 +1,10 @@
+{
+    entry = {
+	bundle = NoSlowAnimationsSettings;
+	cell = PSLinkCell;
+	detail = NoSlowAnimationsSettingsListController;
+	icon = NoSlowAnimationsSettings.png;
+	isController = 1;
+	label = NoSlowAnimations;
+    };
+}
