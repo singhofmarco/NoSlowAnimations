@@ -17,7 +17,7 @@
 }
 
 -(void)twitter:(id)arg1 {
-    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"http://twitter.com/imarcotech"]];
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"http://twitter.com/marcobeans97"]];
     
 }
 

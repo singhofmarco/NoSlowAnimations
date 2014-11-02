@@ -13,14 +13,15 @@
             <key>defaults</key>         <string>com.marcosinghof.NoSlowAnimationsSettings</string>
             <key>key</key>              <string>SCisEnabled</string>
             <key>label</key>            <string>Enabled</string>
-            <key>alternateColors</key>  <true/>
             <key>PostNotification</key> <string>com.marcosinghof.NoSlowAnimationsSettings/settingschanged</string>
         </dict>
+        
         
         <dict>
         	<key>cell</key>				<string>PSGroupCell</string>
         	<key>label</key>			<string>Speed</string>
-        	 	<key>footerText</key>			<string>0.0 = Instant, 1.0 = iOS Default</string>
+        		<key>footerAlignment</key>		<integer>1</integer>
+        	 	<key>footerText</key>			<string>Faster | Slower</string>
         </dict>
   
 
@@ -34,10 +35,12 @@
             <key>PostNotification</key> <string>com.marcosinghof.NoSlowAnimationsSettings/settingschanged</string>
         </dict>
         
+		
+        
         <dict>
         	<key>cell</key>				<string>PSGroupCell</string>
-        	<key>label</key>			<string>Support</string>
-        	<key>footerText</key>			<string>If you like to support me, you can do this with PayPal or Follow me on Twitter.</string>
+        	<key>label</key>			<string>Donate</string>
+        	<key>footerText</key>			<string>If you like the Tweak, please consider to make a donation.</string>
         </dict>
         
          <dict>
@@ -59,6 +62,12 @@
           <string>PayPal</string>
         </dict>
         
+        
+            <dict>
+        	<key>cell</key>				<string>PSGroupCell</string>
+        	<key>label</key>			<string>Support</string>
+        	<key>footerText</key>			<string>If you need support, you can Email me or follow me on Twitter.</string>
+        </dict>
             <dict>
         <key>cell</key>
         <string>PSButtonCell</string>
@@ -105,7 +114,17 @@
                         <key>cell</key>
                         <string>PSGroupCell</string>
                         <key>footerText</key>
-                        <string>NoSlowAnimations by Marco Singhof</string>
+                        <string>NoSlowAnimations © 2014 Marco Singhof</string>
+                        
+                        
+                </dict>
+                  <dict>
+                  <key>cell</key>
+                        <string>PSGroupCell</string>
+                        <key>footerText</key>
+                        <string>Version 4.1</string>
+                        
+                        
                 </dict>
      
     </array>
