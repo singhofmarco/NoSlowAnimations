@@ -17,7 +17,12 @@
 }
 
 -(void)twitter:(id)arg1 {
-    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"http://twitter.com/marcobeans97"]];
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"http://twitter.com/marcosinghof"]];
+    
+}
+
+-(void)respring:(id)arg1 {
+system("killall SpringBoard");
     
 }
 

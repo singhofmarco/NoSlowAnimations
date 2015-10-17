@@ -2,10 +2,10 @@
 
 static BOOL SCisEnabled = YES; // Default value
 static CGFloat Slider = 0.5;
-static BOOL firstStart = YES;
-static NSString * const PREF_PATH = @"/var/mobile/Library/Preferences/com.marcosinghof.NoSlowAnimationsSettings.plist";
-
 static NSDictionary *preferences;
+#ifndef kCFCoreFoundationVersionNumber_iOS_9_0
+#define kCFCoreFoundationVersionNumber_iOS_9_0 1240.10
+#endif
 static void PreferencesChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) 
 {
 	[preferences release];
@@ -28,35 +28,29 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 {
 	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("com.marcosinghof.NoSlowAnimationsSettings/settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 	PreferencesChangedCallback(NULL, NULL, NULL, NULL, NULL);
+
+CFPreferencesAppSynchronize(CFSTR("com.marcosinghof.NoSlowAnimationsSettings"));
 }
 
 %ctor 
 {
 	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("Flipswitch.settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 	PreferencesChangedCallback(NULL, NULL, NULL, NULL, NULL);
+CFPreferencesAppSynchronize(CFSTR("com.marcosinghof.NoSlowAnimationsSettings"));
 }
 
-%hook SpringBoard
--(void)applicationDidFinishLaunching:(id)application 
-{
-	%orig;
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:PREF_PATH];
-	NSMutableDictionary *mutableDict = dict ? [[dict mutableCopy] autorelease] : [NSMutableDictionary dictionary];
-	firstStart = ( [mutableDict objectForKey:@"firstStart"] ? [[mutableDict objectForKey:@"firstStart"] boolValue] : firstStart );
-	if(firstStart == YES)
-	{
-		UIAlertView*theAlert = [[UIAlertView alloc] initWithTitle:@"Thanks for downloading NoSlowAnimations" message:@"To set your custom speed, go to the settings of NoSlowAnimations.\n\nPleas consider to make a donation via the PayPal link in the settings." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Go away", nil];
-		[theAlert show];
-		[theAlert release];
-		[mutableDict setValue:@NO forKey:@"firstStart"];
-		[mutableDict writeToFile:PREF_PATH atomically:YES];
-	}
-}
-%end
+
 
 %hook SBAnimationFactorySettings
+-(void)setDefaultValues
+{
+	return;
+}
 -(BOOL)slowAnimations
 {
+if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
+
+
 	if(SCisEnabled == YES)
 	{
 		return true;
@@ -65,11 +59,17 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 	{
 		return %orig;
 	}
-
+}
+else
+{
+	return %orig;
+}
 }
 
 -(CGFloat)slowDownFactor
 {
+if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
+
 	if(SCisEnabled == YES)
 	{
 		return Slider;
@@ -79,7 +79,58 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 		return %orig;
 	}
 }
+else
+{
+	return %orig;
+}
+}
+
+
 %end
+
+
+
+%hook SBFAnimationFactorySettings
+-(BOOL)slowAnimations
+{
+if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_9_0) {
+
+	if(SCisEnabled == YES)
+	{
+		return true;
+	}
+	else
+	{
+		return %orig;
+	}
+}
+else
+{
+	return %orig;
+}
+
+}
+
+-(CGFloat)slowDownFactor
+{
+if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_9_0) {
+
+	if(SCisEnabled == YES)
+	{
+		return Slider;
+	}
+	else
+	{
+		return %orig;
+	}
+}
+else
+{
+	return %orig;
+}
+}
+%end
+
 
 %hook SBFadeAnimationSettings
 -(CGFloat)backlightFadeDuration

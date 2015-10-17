@@ -1,4 +1,6 @@
-include theos/makefiles/common.mk
+ARCHS = armv7 arm64
+NoSlowAnimationsSettings_LDFLAGS += -Wl,-segalign,4000
+include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = NoSlowAnimationsSettings
 NoSlowAnimationsSettings_FILES = NoSlowAnimationsSettings.mm
