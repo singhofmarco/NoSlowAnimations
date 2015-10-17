@@ -1,9 +1,3 @@
-export ARCHS = armv7 arm64
-TARGET_IPHONEOS_DEPLOYMENT_VERSION = 8.1
-TARGET_IPHONEOS_DEPLOYMENT_VERSION_arm64 = 8.1
-SDKVERSION = 8.1
-
-
 include theos/makefiles/common.mk
 
 BUNDLE_NAME = NoSlowAnimationsSettings

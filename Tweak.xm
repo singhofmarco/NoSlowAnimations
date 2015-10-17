@@ -1,6 +1,4 @@
-#import <Foundation/Foundation.h>
-#import <CoreFoundation/CoreFoundation.h>
-#import <SpringBoard/SpringBoard.h>
+#import <UIKit/UIKit.h>
 
 static BOOL SCisEnabled = YES; // Default value
 static CGFloat Slider = 0.5;
@@ -56,7 +54,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 }
 %end
 
-%hook SBFAnimationFactorySettings
+%hook SBAnimationFactorySettings
 -(BOOL)slowAnimations
 {
 	if(SCisEnabled == YES)

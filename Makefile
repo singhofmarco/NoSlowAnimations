@@ -1,20 +1,15 @@
-export ARCHS = armv7 arm64
-TARGET_IPHONEOS_DEPLOYMENT_VERSION = 8.1
-TARGET_IPHONEOS_DEPLOYMENT_VERSION_arm64 = 8.1
-SDKVERSION = 8.1
+include theos/makefiles/common.mk
 
 TWEAK_NAME = NoSlowAnimations
 NoSlowAnimations_FILES = Tweak.xm
-NoSlowAnimations_FRAMEWORKS = Foundation, UIKit
+NoSlowAnimations_FRAMEWORKS = UIKit
 
 
-
-include theos/makefiles/common.mk
-include theos/makefiles/tweak.mk
+include $(THEOS_MAKE_PATH)/tweak.mk
 
 SUBPROJECTS += noslowanimationssettings
 SUBPROJECTS += noslowanimations_flipswitch
-include theos/makefiles/aggregate.mk
+include $(THEOS_MAKE_PATH)/aggregate.mk
 after-install::
 	install.exec "killall -9 SpringBoard"
 
