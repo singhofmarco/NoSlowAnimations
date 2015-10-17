@@ -1,11 +1,12 @@
 #import <UIKit/UIKit.h>
 
-static BOOL SCisEnabled = YES; // Default value
-static CGFloat Slider = 0.5;
+static BOOL SCisEnabled
+static CGFloat Slider;
 static NSDictionary *preferences;
 #ifndef kCFCoreFoundationVersionNumber_iOS_9_0
 #define kCFCoreFoundationVersionNumber_iOS_9_0 1240.10
 #endif
+
 static void PreferencesChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) 
 {
 	[preferences release];
@@ -29,133 +30,125 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("com.marcosinghof.NoSlowAnimationsSettings/settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 	PreferencesChangedCallback(NULL, NULL, NULL, NULL, NULL);
 
-CFPreferencesAppSynchronize(CFSTR("com.marcosinghof.NoSlowAnimationsSettings"));
-}
-
-%ctor 
-{
 	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("Flipswitch.settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 	PreferencesChangedCallback(NULL, NULL, NULL, NULL, NULL);
-CFPreferencesAppSynchronize(CFSTR("com.marcosinghof.NoSlowAnimationsSettings"));
+	
+	CFPreferencesAppSynchronize(CFSTR("com.marcosinghof.NoSlowAnimationsSettings"));
 }
 
 
 
 %hook SBAnimationFactorySettings
--(void)setDefaultValues
-{
-	return;
-}
--(BOOL)slowAnimations
-{
-if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
-
-
-	if(SCisEnabled == YES)
+	(BOOL)slowAnimations
 	{
-		return true;
+		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
+
+
+		if(SCisEnabled == YES)
+		{
+			return true;
+		}
+		else
+		{
+			return %orig;
+		}
 	}
 	else
 	{
 		return %orig;
 	}
-}
-else
-{
-	return %orig;
-}
-}
+	}
 
--(CGFloat)slowDownFactor
-{
-if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
-
-	if(SCisEnabled == YES)
+	-(CGFloat)slowDownFactor
 	{
-		return Slider;
+	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
+
+		if(SCisEnabled == YES)
+		{
+			return Slider;
+		}
+		else
+		{
+			return %orig;
+		}
 	}
 	else
 	{
 		return %orig;
 	}
-}
-else
-{
-	return %orig;
-}
-}
+	}
 
 
-%end
+	%end
 
 
 
 %hook SBFAnimationFactorySettings
--(BOOL)slowAnimations
-{
-if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_9_0) {
-
-	if(SCisEnabled == YES)
+	-(BOOL)slowAnimations
 	{
-		return true;
-	}
-	else
-	{
-		return %orig;
-	}
-}
-else
-{
-	return %orig;
-}
+	if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_9_0) {
 
-}
-
--(CGFloat)slowDownFactor
-{
-if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_9_0) {
-
-	if(SCisEnabled == YES)
-	{
-		return Slider;
-	}
-	else
-	{
-		return %orig;
-	}
-}
-else
-{
-	return %orig;
-}
-}
-%end
-
-
-%hook SBFadeAnimationSettings
--(CGFloat)backlightFadeDuration
-{
-	if(SCisEnabled == YES)
-	{
-		if(Slider <= 0.30)
+		if(SCisEnabled == YES)
 		{
-			if(Slider <= 0.10)
+			return true;
+		}
+		else
+		{
+			return %orig;
+		}
+	}
+	else
+	{
+		return %orig;
+	}
+
+	}
+
+	-(CGFloat)slowDownFactor
+	{
+		if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_9_0) {
+
+			if(SCisEnabled == YES)
 			{
-				return 0.0;
+				return Slider;
 			}
 			else
 			{
-				return 0.1;
+				return %orig;
 			}
 		}
 		else
 		{
-			return 0.2;
-		}
+			return %orig;
 	}
-	else
+	}
+%end
+
+
+%hook SBFadeAnimationSettings
+	-(CGFloat)backlightFadeDuration
 	{
-		return %orig;
-	}
+		if(SCisEnabled == YES)
+		{
+			if(Slider <= 0.30)
+			{
+				if(Slider <= 0.10)
+				{
+					return 0.0;
+				}
+				else
+				{
+					return 0.1;
+				}
+			}
+			else
+			{
+				return 0.2;
+			}
+		}
+		else
+		{
+			return %orig;
+		}
 }
 %end
