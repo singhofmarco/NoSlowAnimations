@@ -48,7 +48,7 @@
         <key>action</key>
           <string>respring:</string>
           <key>label</key>
-          <string>Respring (iOS 9 only)</string>
+          <string>Respring</string>
           <key>id</key>
           <string>respring</string>
         </dict>
@@ -57,7 +57,7 @@
         <dict>
         	<key>cell</key>				<string>PSGroupCell</string>
         	<key>label</key>			<string>Donate</string>
-        	<key>footerText</key>			<string>If you like the Tweak, please consider to make a donation.</string>
+        	<key>footerText</key>			<string>Buy Me a Coffee</string>
         </dict>
         
          <dict>
@@ -83,7 +83,7 @@
             <dict>
         	<key>cell</key>				<string>PSGroupCell</string>
         	<key>label</key>			<string>Support</string>
-        	<key>footerText</key>			<string>If you need support, you can mail me or follow me on Twitter.</string>
+        	<key>footerText</key>			<string>Check out the source code on GitHub.</string>
         </dict>
             <dict>
         <key>cell</key>
@@ -126,6 +126,27 @@
           <key>id</key>
           <string>sendEmailTo</string>
         </dict>
+		
+		   <dict>
+        <key>cell</key>
+        <string>PSButtonCell</string>
+        <key>default</key>
+        <true/>
+  <key>alternateColors</key>
+         <true/>
+        <key>enabled</key>
+          <true/>
+          <key>icon</key>
+          <string>github@2x.png</string>
+          <key>isDestructive</key>
+          <true/>
+        <key>action</key>
+          <string>github:</string>
+          <key>label</key>
+          <string>GitHub</string>
+          <key>id</key>
+          <string>github</string>
+	  </dict>
         
          <dict>
                         <key>cell</key>

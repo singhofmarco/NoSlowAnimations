@@ -1,11 +1,25 @@
 #import <UIKit/UIKit.h>
 
-static BOOL SCisEnabled
+static BOOL SCisEnabled;
+static BOOL iOS9;
 static CGFloat Slider;
 static NSDictionary *preferences;
+
 #ifndef kCFCoreFoundationVersionNumber_iOS_9_0
 #define kCFCoreFoundationVersionNumber_iOS_9_0 1240.10
 #endif
+
+void checkForVersion()
+	{
+					if (kCFCoreFoundationVersionNumber == kCFCoreFoundationVersionNumber_iOS_9_0) 
+					{
+						iOS9 = true;
+					}
+					else {
+						iOS9 = false;
+					}
+						
+	}
 
 static void PreferencesChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) 
 {
@@ -27,10 +41,10 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 
 %ctor 
 {
+	checkForVersion();
+	
 	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("com.marcosinghof.NoSlowAnimationsSettings/settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
-	PreferencesChangedCallback(NULL, NULL, NULL, NULL, NULL);
 
-	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("Flipswitch.settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 	PreferencesChangedCallback(NULL, NULL, NULL, NULL, NULL);
 	
 	CFPreferencesAppSynchronize(CFSTR("com.marcosinghof.NoSlowAnimationsSettings"));
@@ -39,9 +53,9 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 
 
 %hook SBAnimationFactorySettings
-	(BOOL)slowAnimations
+	-(BOOL)slowAnimations
 	{
-		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
+		if (iOS9) {
 
 
 		if(SCisEnabled == YES)
@@ -61,7 +75,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 
 	-(CGFloat)slowDownFactor
 	{
-	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
+	if (iOS9) {
 
 		if(SCisEnabled == YES)
 		{
@@ -86,7 +100,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 %hook SBFAnimationFactorySettings
 	-(BOOL)slowAnimations
 	{
-	if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_9_0) {
+	if (iOS9) {
 
 		if(SCisEnabled == YES)
 		{
@@ -106,7 +120,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 
 	-(CGFloat)slowDownFactor
 	{
-		if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_9_0) {
+		if (iOS9) {
 
 			if(SCisEnabled == YES)
 			{

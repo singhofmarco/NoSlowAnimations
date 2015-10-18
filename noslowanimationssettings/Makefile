@@ -1,5 +1,5 @@
 ARCHS = armv7 arm64
-NoSlowAnimationsSettings_LDFLAGS += -Wl,-segalign,4000
+
 include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = NoSlowAnimationsSettings
@@ -7,6 +7,7 @@ NoSlowAnimationsSettings_FILES = NoSlowAnimationsSettings.mm
 NoSlowAnimationsSettings_INSTALL_PATH = /Library/PreferenceBundles
 NoSlowAnimationsSettings_FRAMEWORKS = UIKit
 NoSlowAnimationsSettings_PRIVATE_FRAMEWORKS = Preferences
+NoSlowAnimationsSettings_LDFLAGS += -Wl,-segalign,4000
 
 include $(THEOS_MAKE_PATH)/bundle.mk
 
