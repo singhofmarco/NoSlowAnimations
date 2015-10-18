@@ -1,13 +1,26 @@
-#import <Foundation/Foundation.h>
-#import <CoreFoundation/CoreFoundation.h>
-#import <SpringBoard/SpringBoard.h>
+#import <UIKit/UIKit.h>
 
-static BOOL SCisEnabled = YES; // Default value
-static CGFloat Slider = 0.5;
-static BOOL firstStart = YES;
-static NSString * const PREF_PATH = @"/var/mobile/Library/Preferences/com.marcosinghof.NoSlowAnimationsSettings.plist";
-
+static BOOL SCisEnabled;
+static BOOL iOS9;
+static CGFloat Slider;
 static NSDictionary *preferences;
+
+#ifndef kCFCoreFoundationVersionNumber_iOS_9_0
+#define kCFCoreFoundationVersionNumber_iOS_9_0 1240.10
+#endif
+
+void checkForVersion()
+	{
+					if (kCFCoreFoundationVersionNumber == kCFCoreFoundationVersionNumber_iOS_9_0) 
+					{
+						iOS9 = true;
+					}
+					else {
+						iOS9 = false;
+					}
+						
+	}
+
 static void PreferencesChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) 
 {
 	[preferences release];
@@ -28,85 +41,128 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 
 %ctor 
 {
+	checkForVersion();
+	
 	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("com.marcosinghof.NoSlowAnimationsSettings/settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+
 	PreferencesChangedCallback(NULL, NULL, NULL, NULL, NULL);
+	
+	CFPreferencesAppSynchronize(CFSTR("com.marcosinghof.NoSlowAnimationsSettings"));
 }
 
-%ctor 
-{
-	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("Flipswitch.settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
-	PreferencesChangedCallback(NULL, NULL, NULL, NULL, NULL);
-}
 
-%hook SpringBoard
--(void)applicationDidFinishLaunching:(id)application 
-{
-	%orig;
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:PREF_PATH];
-	NSMutableDictionary *mutableDict = dict ? [[dict mutableCopy] autorelease] : [NSMutableDictionary dictionary];
-	firstStart = ( [mutableDict objectForKey:@"firstStart"] ? [[mutableDict objectForKey:@"firstStart"] boolValue] : firstStart );
-	if(firstStart == YES)
+
+%hook SBAnimationFactorySettings
+	-(BOOL)slowAnimations
 	{
-		UIAlertView*theAlert = [[UIAlertView alloc] initWithTitle:@"Thanks for downloading NoSlowAnimations" message:@"To set your custom speed, go to the settings of NoSlowAnimations.\n\nPleas consider to make a donation via the PayPal link in the settings." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Go away", nil];
-		[theAlert show];
-		[theAlert release];
-		[mutableDict setValue:@NO forKey:@"firstStart"];
-		[mutableDict writeToFile:PREF_PATH atomically:YES];
+		if (iOS9) {
+
+
+		if(SCisEnabled == YES)
+		{
+			return true;
+		}
+		else
+		{
+			return %orig;
+		}
 	}
-}
-%end
+	else
+	{
+		return %orig;
+	}
+	}
+
+	-(CGFloat)slowDownFactor
+	{
+	if (iOS9) {
+
+		if(SCisEnabled == YES)
+		{
+			return Slider;
+		}
+		else
+		{
+			return %orig;
+		}
+	}
+	else
+	{
+		return %orig;
+	}
+	}
+
+
+	%end
+
+
 
 %hook SBFAnimationFactorySettings
--(BOOL)slowAnimations
-{
-	if(SCisEnabled == YES)
+	-(BOOL)slowAnimations
 	{
-		return true;
-	}
-	else
-	{
-		return %orig;
-	}
+	if (iOS9) {
 
-}
-
--(CGFloat)slowDownFactor
-{
-	if(SCisEnabled == YES)
-	{
-		return Slider;
-	}
-	else
-	{
-		return %orig;
-	}
-}
-%end
-
-%hook SBFadeAnimationSettings
--(CGFloat)backlightFadeDuration
-{
-	if(SCisEnabled == YES)
-	{
-		if(Slider <= 0.30)
+		if(SCisEnabled == YES)
 		{
-			if(Slider <= 0.10)
+			return true;
+		}
+		else
+		{
+			return %orig;
+		}
+	}
+	else
+	{
+		return %orig;
+	}
+
+	}
+
+	-(CGFloat)slowDownFactor
+	{
+		if (iOS9) {
+
+			if(SCisEnabled == YES)
 			{
-				return 0.0;
+				return Slider;
 			}
 			else
 			{
-				return 0.1;
+				return %orig;
 			}
 		}
 		else
 		{
-			return 0.2;
-		}
+			return %orig;
 	}
-	else
+	}
+%end
+
+
+%hook SBFadeAnimationSettings
+	-(CGFloat)backlightFadeDuration
 	{
-		return %orig;
-	}
+		if(SCisEnabled == YES)
+		{
+			if(Slider <= 0.30)
+			{
+				if(Slider <= 0.10)
+				{
+					return 0.0;
+				}
+				else
+				{
+					return 0.1;
+				}
+			}
+			else
+			{
+				return 0.2;
+			}
+		}
+		else
+		{
+			return %orig;
+		}
 }
 %end

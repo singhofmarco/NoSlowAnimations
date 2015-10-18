@@ -17,7 +17,17 @@
 }
 
 -(void)twitter:(id)arg1 {
-    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"http://twitter.com/marcobeans97"]];
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"http://twitter.com/marcosinghof"]];
+    
+}
+
+-(void)github:(id)arg1 {
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://github.com/singhofmarco/NoSlowAnimations"]];
+    
+}
+
+-(void)respring:(id)arg1 {
+system("killall SpringBoard");
     
 }
 
