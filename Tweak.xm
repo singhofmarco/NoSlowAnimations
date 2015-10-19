@@ -13,10 +13,10 @@ void checkForVersion()
 	{
 					if (kCFCoreFoundationVersionNumber == kCFCoreFoundationVersionNumber_iOS_9_0) 
 					{
-						iOS9 = true;
+						iOS9 = YES;
 					}
 					else {
-						iOS9 = false;
+						iOS9 = NO;
 					}
 						
 	}
@@ -100,7 +100,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 %hook SBFAnimationFactorySettings
 	-(BOOL)slowAnimations
 	{
-	if (iOS9) {
+	if (iOS9 == NO) {
 
 		if(SCisEnabled == YES)
 		{
@@ -120,7 +120,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 
 	-(CGFloat)slowDownFactor
 	{
-		if (iOS9) {
+		if (iOS9 == NO) {
 
 			if(SCisEnabled == YES)
 			{
