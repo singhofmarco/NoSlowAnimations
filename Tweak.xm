@@ -7,46 +7,10 @@
 #define kCFCoreFoundationVersionNumber_iOS_9_0 1240.10
 #endif
 
-<<<<<<< HEAD
-void checkForVersion()
-	{
-					if (kCFCoreFoundationVersionNumber == kCFCoreFoundationVersionNumber_iOS_9_0) 
-					{
-						iOS9 = YES;
-					}
-					else {
-						iOS9 = NO;
-					}
-						
-	}
 
-static void PreferencesChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) 
-{
-	[preferences release];
-	CFStringRef appID = CFSTR("com.marcosinghof.NoSlowAnimationsSettings");
-	CFArrayRef keyList = CFPreferencesCopyKeyList(appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
-	if (!keyList) {
-		//NSLog(@"There's been an error getting the key list!");
-		return;
-	}
-	preferences = (NSDictionary *)CFPreferencesCopyMultiple(keyList, appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
-	if (!preferences) {
-		//NSLog(@"There's been an error getting the preferences dictionary!");
-	}
-	CFRelease(keyList);
-	SCisEnabled = ( [preferences objectForKey:@"SCisEnabled"] ? [[preferences objectForKey:@"SCisEnabled"] boolValue] : SCisEnabled );
-	Slider = ( [preferences objectForKey:@"Slider"] ? [[preferences objectForKey:@"Slider"] floatValue] : Slider );
-}
-
-%ctor 
-{
-	checkForVersion();
-	
-	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("com.marcosinghof.NoSlowAnimationsSettings/settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
-=======
 static BOOL SCisEnabled;
 static CGFloat Slider;
->>>>>>> master
+
 
 static void initPrefs() {
 	NSDictionary *NSASettings = [NSDictionary dictionaryWithContentsOfFile:NSAPreferencePath];
@@ -75,30 +39,14 @@ static void initPrefs() {
 
 %group iOS78Hook
 %hook SBFAnimationFactorySettings
-<<<<<<< HEAD
-	-(BOOL)slowAnimations
-	{
-	if (iOS9 == NO) {
 
-		if(SCisEnabled == YES)
-		{
-			return true;
-		}
-		else
-		{
-			return %orig;
-		}
-	}
-	else
-	{
-		return %orig;
-=======
+
 -(BOOL) slowAnimations {
 	if (SCisEnabled) {
 		return 1;
 	} else {
 		return %orig();
->>>>>>> master
+
 	}
 }
 
@@ -108,30 +56,9 @@ static void initPrefs() {
 	} else {
 		return %orig();
 	}
-<<<<<<< HEAD
 
-	-(CGFloat)slowDownFactor
-	{
-		if (iOS9 == NO) {
-
-			if(SCisEnabled == YES)
-			{
-				return Slider;
-			}
-			else
-			{
-				return %orig;
-			}
-		}
-		else
-		{
-			return %orig;
-	}
-	}
-=======
 }
 %end
->>>>>>> master
 %end
 
 %hook SBFadeAnimationSettings
