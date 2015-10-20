@@ -9,7 +9,6 @@ NoSlowAnimationsSettings_FILES = NoSlowAnimationsSettings.mm
 NoSlowAnimationsSettings_INSTALL_PATH = /Library/PreferenceBundles
 NoSlowAnimationsSettings_FRAMEWORKS = UIKit
 NoSlowAnimationsSettings_PRIVATE_FRAMEWORKS = Preferences
-NoSlowAnimationsSettings_LIBRARIES = prefs
 NoSlowAnimationsSettings_LDFLAGS += -Wl,-segalign,4000
 
 include $(THEOS_MAKE_PATH)/bundle.mk

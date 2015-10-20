@@ -1,13 +1,20 @@
 #import <Preferences/Preferences.h>
-#import <libprefs/prefs.h>
 
-#define NSAPreferencePath @"/User/Library/Preferences/com.marcosinghof.NoSlowAnimationsSettings.plist"
+#define NSAPreferencePath @"/User/Library/Preferences/com.marcosinghof.NoSlowAnimations.plist"
 
-@interface NoSlowAnimationsSettingsListController: PLCustomListController {
+@interface NoSlowAnimationsSettingsListController : PSListController {
 }
 @end
 
 @implementation NoSlowAnimationsSettingsListController
+
+- (id)specifiers {
+	if(_specifiers == nil) {
+		_specifiers = [[self loadSpecifiersFromPlistName:@"NoSlowAnimations" target:self] retain];
+	}
+	return _specifiers;
+}
+
 -(id) bundle {
 	return [NSBundle bundleForClass:[self class]];
 }
