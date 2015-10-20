@@ -10,13 +10,13 @@
 		</dict>
 		<dict>
 			<key>PostNotification</key>
-			<string>com.marcosinghof.NoSlowAnimationsSettings/settingschanged</string>
+			<string>com.marcosinghof.NoSlowAnimations/settingschanged</string>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
 			<true/>
 			<key>defaults</key>
-			<string>com.marcosinghof.NoSlowAnimationsSettings</string>
+			<string>com.marcosinghof.NoSlowAnimations</string>
 			<key>key</key>
 			<string>SCisEnabled</string>
 			<key>label</key>
@@ -34,11 +34,11 @@
 		</dict>
 		<dict>
 			<key>PostNotification</key>
-			<string>com.marcosinghof.NoSlowAnimationsSettings/settingschanged</string>
+			<string>com.marcosinghof.NoSlowAnimations/settingschanged</string>
 			<key>cell</key>
 			<string>PSSliderCell</string>
 			<key>defaults</key>
-			<string>com.marcosinghof.NoSlowAnimationsSettings</string>
+			<string>com.marcosinghof.NoSlowAnimations</string>
 			<key>key</key>
 			<string>Slider</string>
 			<key>max</key>
@@ -52,7 +52,7 @@
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>action</key>
-			<string>respring</string>
+			<string>respring:</string>
 			<key>label</key>
 			<string>Respring</string>
 			<key>pl_filter</key>
@@ -63,6 +63,28 @@
 				</array>
 			</dict>
 		</dict>
+    <dict>
+      <key>cell</key>
+      <string>PSGroupCell</string>
+      <key>footerText</key>
+      <string>Volume and Ringtone HUD</string>
+      <key>label</key>
+      <string>Options</string>
+    </dict>
+    <dict>
+      <key>PostNotification</key>
+      <string>com.marcosinghof.NoSlowAnimations/settingschanged</string>
+      <key>cell</key>
+      <string>PSSwitchCell</string>
+      <key>default</key>
+      <true/>
+      <key>defaults</key>
+      <string>com.marcosinghof.NoSlowAnimations</string>
+      <key>key</key>
+      <string>applyOnHUD</string>
+      <key>label</key>
+      <string>Speed up HUDs</string>
+    </dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -73,13 +95,15 @@
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>donate</string>
+			<string>donate:</string>
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>icon</key>
 			<string>paypal.png</string>
 			<key>label</key>
 			<string>PayPal</string>
+      <key>id</key>
+      <string>donate</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -91,41 +115,47 @@
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>twitter</string>
+			<string>twitter:</string>
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>icon</key>
 			<string>twitter.png</string>
 			<key>label</key>
 			<string>Twitter</string>
+      <key>id</key>
+      <string>twitter</string>
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>sendEmailTo</string>
+			<string>sendEmailTo:</string>
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>icon</key>
 			<string>mail.png</string>
 			<key>label</key>
 			<string>Email</string>
+      <key>id</key>
+      <string>sendEmailTo</string>
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>github</string>
+			<string>github:</string>
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>icon</key>
 			<string>github.png</string>
 			<key>label</key>
 			<string>GitHub</string>
+      <key>id</key>
+      <string>github</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>NoSlowAnimations 5.1 © 2015 Marco Singhof
+			<string>NoSlowAnimations 5.2 © 2015 Marco Singhof
 
-Special thanks to Karen Tsai @angelXwind</string>
+Credits to Karen Tsai @angelXwind, Joe Merlino @joe_merlino</string>
 		</dict>
 	</array>
 	<key>title</key>
