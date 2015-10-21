@@ -69,14 +69,7 @@ static void initPrefs() {
 		}
 		else 
 		{
-			if(Slider < 0.80)
-			{
-				return Slider;
-			}
-			else
-			{
-				return 0.80;
-			}
+			return 0.2;
 		}
 	} 
 	else 

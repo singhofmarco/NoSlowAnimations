@@ -2,7 +2,7 @@ Package: com.MarcoSinghof.NoSlowAnimations
 Name: NoSlowAnimations
 Pre-Depends: firmware (>= 7.0.3)
 Depends: mobilesubstrate
-Version: 5.2
+Version: 5.2.1
 Architecture: iphoneos-arm
 Description: Don’t get slowed down by the animations on iOS 7, 8 and 9.
 Maintainer: Marco Singhof
