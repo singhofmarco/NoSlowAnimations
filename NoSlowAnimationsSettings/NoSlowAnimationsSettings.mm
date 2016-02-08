@@ -48,10 +48,6 @@
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/singhofmarco/NoSlowAnimations"]];
 }
 
--(void) respring:(id)arg1 {
-	system("/usr/bin/killall -9 backboardd");
-}
-
 -(void) sendEmailTo:(id)arg1 {
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mailto:singhofmarco@gmail.com"]];
 }
