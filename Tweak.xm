@@ -7,11 +7,16 @@
 #define kCFCoreFoundationVersionNumber_iOS_9_0 1240.10
 #endif
 
+@interface SBAnimationFactorySettings : NSObject // _UISettings
+- (void)setSlowDownFactor:(double)arg1;
+@end
+
 const double minimumHudSpeed = 0.15;
 
 static BOOL SCisEnabled = YES;
 static CGFloat Slider = 0.5;
 static BOOL applyOnHUD = YES;
+static SBAnimationFactorySettings *animationFactorySettings = nil;
 
 
 static void initPrefs() {
@@ -19,18 +24,28 @@ static void initPrefs() {
 	SCisEnabled = ([NSASettings objectForKey:@"SCisEnabled"] ? [[NSASettings objectForKey:@"SCisEnabled"] boolValue] : SCisEnabled);
 	applyOnHUD = ([NSASettings objectForKey:@"applyOnHUD"] ? [[NSASettings objectForKey:@"applyOnHUD"] boolValue] : applyOnHUD);
 	Slider = ([NSASettings objectForKey:@"Slider"] ? [[NSASettings objectForKey:@"Slider"] floatValue] : Slider);
+
+	if (animationFactorySettings) {
+		if (SCisEnabled) {
+			[animationFactorySettings setSlowDownFactor:Slider];
+		} else {
+			[animationFactorySettings setSlowDownFactor:1.0];
+		}
+	}
 }
 
 %group iOS9Hook
 %hook SBAnimationFactorySettings
--(BOOL) slowAnimations {
-	return SCisEnabled;
-}
--(CGFloat) slowDownFactor {
+-(void) setSlowDownFactor:(CGFloat)arg1 {
+	static dispatch_once_t once;
+	dispatch_once(&once, ^{
+		animationFactorySettings = self;
+	});
+
 	if (SCisEnabled) {
-		return Slider;
+		%orig(Slider);
 	} else {
-		return %orig();
+		%orig();
 	}
 }
 %end
